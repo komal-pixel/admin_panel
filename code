@@ -1,0 +1,155 @@
+<script>
+                      sweetAlert(
+                          {
+                              title: "Wow One Product Added...!",
+                              text: "Just wait for a Second",
+                              type: "success"
+                          },
+                          function () {
+                              window.location.href = 'add_product.php';
+                          });
+                  </script>
+----
+（IPMsg Delayed Send: 15:30）
+another one
+
+          if(isset($_POST['add_category']))
+          {
+            //// escape variables for security
+          $category_name=mysqli_real_escape_string($con , $_POST['category']); 
+            if (empty($category_name)) {
+                ?>
+                  <script>
+                      sweetAlert(
+                          {
+                              title: "Category field is blank",
+                              text: "Just wait for a Second",
+                              type: "error"
+                          },
+                          function () {
+                              window.location.href = 'add_category.php';
+                          });
+                  </script>
+                <?php
+            }
+            else{
+
+              $match="SELECT * FROM category WHERE category='$category_name'";
+              $execute=mysqli_query($con,$match);
+              $row=mysqli_fetch_array($execute);
+              if ($row['category'] === $category_name) {
+                  ?>
+                    <script>
+                        sweetAlert(
+                            {
+                                title: "Allready Taken..! Plaese try another One.",
+                                text: "Just wait for a Second",
+                                type: "error"
+                            },
+                            function () {
+                                window.location.href = 'add_category.php';
+                            });
+                    </script>
+                  <?php
+              }
+              else{
+
+              $Query="INSERT INTO category (category) VALUES ('$category_name')";
+              $run=mysqli_query($con,$Query);
+              if ($run > 0) {
+                  ?>
+                    <script>
+                      sweetAlert(
+                          {
+                              title: "Record Successfull Added...!",
+                              text: "Just wait for a Second",
+                              type: "success"
+                          },
+                          function () {
+                              window.location.href = 'add_category.php';
+                          });
+                  </script>
+                  <?php
+              }
+              else{
+                ?>
+                    <script>
+                      sweetAlert(
+                          {
+                              title: "Plaese check Your Connection..!",
+                              text: "Just wait for a Second",
+                              type: "error"
+                          },
+                          function () {
+                              window.location.href = 'add_category.php';
+                          });
+                  </script>
+                  <?php
+              }
+            }
+          }
+        }
+
+
+
+        //
+        //update category
+        //
+                                              <?php 
+                                         function time_ago($timestamp)
+                                         {
+                                              $time_ago= strtotime($timestamp);
+                                              $current_time=time();
+                                              $time_difference=$current_time-$time_ago;
+                                              $seconds=$time_difference;
+                                              $minutes=round($seconds /60);
+                                              $hours=round($seconds/3600);
+                                              $days=round($seconds /24 *60 * 60);
+                                              $weeks=round($seconds/7*24*60*60);
+                                              $months=round($seconds/2629440);
+                                              $years=round($seconds/31553280);
+
+                                              if($seconds<=60){
+                                                return "just now";
+                                              }
+                                              elseif($minutes<=1){
+                                                        if($minutes<=60){
+                                                        return "1 minute ago";
+                                                     }
+                                                      else{
+                                                        return "$minutes minute ago";
+                                                        }
+                                                     }
+                                                    elseif($hours<=24){
+                                                        if($hours<=1){
+                                                        return "1 hour ago";
+                                                        }
+                                                        else{
+                                                            return "$hours hour ago";
+                                                          }
+                                                        }
+                                                        elseif($weeks<=5.3){
+                                                            if($weeks==1){
+                                                                return "1 week ago";
+                                                            }
+                                                            else{
+                                                                return "$weeks week ago";
+                                                                }
+                                                            }
+                                                            elseif($months<=12){
+                                                                if($months<=1){
+                                                                    return "1 month ago";
+                                                                }
+                                                                else{
+                                                                    return "$months month ago";
+                                                                    }
+                                                                }
+                                                                elseif($years==1){
+                                                                    return "1 year ago";
+                                                                }
+                                                                    else{
+                                                                        return "$years year ago";
+                                                                    }
+                                                                }
+                                        }
+                                                            
